@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Chatbot from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
-import "./chatbotStyles.css"; // Import the custom styles
+import './chatbotStyles.css'; // Import the custom styles
 
 import { createChatBotMessage } from "react-chatbot-kit";
 
