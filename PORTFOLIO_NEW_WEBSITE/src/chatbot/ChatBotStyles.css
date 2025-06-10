@@ -1,0 +1,43 @@
+/* ... (keep all your existing general chatbot styles above this section) ... */
+
+/* --- Bot Avatar Styling (for straight text) --- */
+
+.react-chatbot-kit-chat-bot-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border-radius: 50% !important;
+    background-color: #4a148c !important; /* This should be your deep purple avatar background */
+
+    /* Flexbox properties to center content (the text) */
+    display: flex !important;
+    align-items: center !important; /* Vertically center the text */
+    justify-content: center !important; /* Horizontally center the text */
+
+    overflow: hidden; /* Ensures content stays within the circle */
+    margin-right: 10px !important; /* Space between avatar and message */
+}
+
+/* Container for the two lines of text within the avatar */
+.tris-bot-text-container {
+  display: flex;
+  flex-direction: column; /* Stack "Trisan" and "Bot" vertically */
+  align-items: center; /* Center lines horizontally within the container */
+  justify-content: center; /* Center lines vertically within the container */
+  line-height: 1; /* Reduce line height for compact text */
+}
+
+/* Styling for individual lines "Trisan" and "Bot" */
+.tris-bot-line {
+  color: white !important; /* <<-- I've changed this to WHITE for maximum visibility -->> */
+  font-size: 10px !important; /* Adjust font size to fit */
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+}
+
+/* Small adjustment for the avatar message container to ensure alignment */
+.react-chatbot-kit-chat-bot-message-container {
+    display: flex !important;
+    align-items: flex-start !important; /* Align avatar and message nicely */
+}
