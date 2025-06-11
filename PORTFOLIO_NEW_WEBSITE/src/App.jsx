@@ -3,25 +3,28 @@ import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
 import Chatbot from "./chatbot/Chatbot.jsx";
-import { MouseTrail } from "./components/MouseTrail.jsx"; // ✅ Only this one
-import {VoiceNavigator} from "./components/VoiceNavigator.jsx";
+import { MouseTrail } from "./components/MouseTrail.jsx";
+import { CursorTrail } from "./components/CursorTrail.jsx";
+import VoiceAssistant from "./components/VoiceAssistant";
+import PoemReciter from "./components/PoemReciter";
 
-import { CursorTrail} from "./components/CursorTrail.jsx";
 
 function App() {
   return (
     <>
       <Toaster />
       <CursorTrail />
-      <MouseTrail /> 
-      <BrowserRouter>
+      <MouseTrail />
+      <BrowserRouter> {/* BrowserRouter starts here */}
         <Routes>
           <Route index element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-      <Chatbot />
-      <VoiceNavigator />
+        {/* Move Chatbot and UnifiedAssistant INSIDE BrowserRouter */}
+        <Chatbot />
+        <VoiceAssistant />
+        <PoemReciter />
+      </BrowserRouter> {/* BrowserRouter ends here */}
     </>
   );
 }

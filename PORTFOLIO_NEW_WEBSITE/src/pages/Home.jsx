@@ -10,7 +10,7 @@ import { CertificateSection } from "../components/CertificateSection"; // ✅ Im
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 
-import { VoiceNavigator } from "../components/VoiceNavigator"; 
+
 
 export const Home = () => {
   return (
@@ -22,9 +22,7 @@ export const Home = () => {
 
       {/* Navbar */}
       <Navbar />
-      {/* Main Content */}
-
-      <VoiceNavigator /> 
+      {/* Main Content */} 
 
       <main>
         <HeroSection />

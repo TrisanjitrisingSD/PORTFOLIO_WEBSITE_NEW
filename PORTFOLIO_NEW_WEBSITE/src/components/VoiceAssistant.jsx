@@ -89,17 +89,17 @@ export const VoiceNavigator = () => {
     <>
       {/* 🔴 Voice Assistant Sleep Message */}
       {showSleepMessage && (
-        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-lg shadow-xl text-xl font-bold z-50 animate-pulse">
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-xl text-xl font-bold z-50 animate-pulse">
           {sleepText}
         </div>
       )}
 
-      {/* 🟢 Activate Button */}
+      {/* 🟢 Activate Voice Button */}
       <button
         onClick={() => setIsListening(true)}
-        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 text-white px-6 py-3 rounded-full shadow-lg text-lg font-semibold transition duration-300 z-50"
+        className="bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-blue-600 hover:to-indigo-500 text-white px-4 py-2 rounded-full shadow-lg text-base font-medium transition duration-200 z-50"
       >
-        🎤 Activate Voice Assistant
+        🎧 Activate Voice
       </button>
     </>
   );
