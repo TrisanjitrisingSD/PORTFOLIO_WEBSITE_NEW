@@ -3,16 +3,17 @@ import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
 import Chatbot from "./chatbot/Chatbot.jsx";
-import { MouseTrail } from "./components/MouseTrail"; // NEW
+import { MouseTrail } from "./components/MouseTrail.jsx"; // ✅ Only this one
+import {VoiceNavigator} from "./components/VoiceNavigator.jsx";
 
-import { CursorTrail } from "./components/CursorTrail"; // 👈 Import CursorTrail
-
+import { CursorTrail} from "./components/CursorTrail.jsx";
 
 function App() {
   return (
     <>
       <Toaster />
-      <CursorTrail /> {/* 👈 Add CursorTrail here */}
+      <CursorTrail />
+      <MouseTrail /> 
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
@@ -20,7 +21,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Chatbot />
-      <MouseTrail /> {/* ✨ Add here */}
+      <VoiceNavigator />
     </>
   );
 }

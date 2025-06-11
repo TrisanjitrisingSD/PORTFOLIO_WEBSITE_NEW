@@ -10,6 +10,8 @@ import { CertificateSection } from "../components/CertificateSection"; // ✅ Im
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 
+import { VoiceNavigator } from "../components/VoiceNavigator"; 
+
 export const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -21,12 +23,15 @@ export const Home = () => {
       {/* Navbar */}
       <Navbar />
       {/* Main Content */}
+
+      <VoiceNavigator /> 
+
       <main>
         <HeroSection />
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
-        <CertificateSection /> {/* ✅ Certificates section inserted */}
+        <CertificateSection /> 
         <ContactSection />
       </main>
 
