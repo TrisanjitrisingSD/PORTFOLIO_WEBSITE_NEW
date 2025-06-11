@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const VoiceNavigator = () => {
   const [isListening, setIsListening] = useState(false);
   const [showSleepMessage, setShowSleepMessage] = useState(false);
   const [sleepText, setSleepText] = useState("");
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     const SpeechRecognition =
@@ -17,6 +18,7 @@ export const VoiceNavigator = () => {
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.lang = "en-US";
+    recognitionRef.current = recognition;
 
     recognition.onresult = (event) => {
       const transcript = event.results[event.results.length - 1][0].transcript
@@ -44,6 +46,46 @@ export const VoiceNavigator = () => {
       }
     };
 
+    recognition.onend = () => {
+      console.log("Speech recognition ended");
+      if (isListening && recognitionRef.current) {
+        console.log("Restarting recognition on mobile");
+        try {
+          recognitionRef.current.start();
+        } catch (error) {
+          console.error("Failed to restart recognition:", error);
+          setIsListening(false);
+          setShowSleepMessage(true);
+          setSleepText("Recognition error, going asleep.");
+          speechSynthesis.speak(
+            new SpeechSynthesisUtterance("Recognition error, going asleep.")
+          );
+          setTimeout(() => {
+            setShowSleepMessage(false);
+            setSleepText("");
+          }, 5000);
+        }
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      if (event.error === "no-speech" && isListening) {
+        console.log("No speech detected, continuing to listen");
+        return;
+      }
+      setIsListening(false);
+      setShowSleepMessage(true);
+      setSleepText("Recognition error, going asleep.");
+      speechSynthesis.speak(
+        new SpeechSynthesisUtterance("Recognition error, going asleep.")
+      );
+      setTimeout(() => {
+        setShowSleepMessage(false);
+        setSleepText("");
+      }, 5000);
+    };
+
     if (isListening) {
       recognition.start();
 
@@ -56,7 +98,7 @@ export const VoiceNavigator = () => {
       prompt.lang = "en-US";
       speechSynthesis.speak(prompt);
 
-      // Stop after 15 seconds
+      // Stop after 20 seconds
       setTimeout(() => {
         const message =
           "Thank you, I am going asleep. If you need me further, activate me.";
@@ -81,7 +123,10 @@ export const VoiceNavigator = () => {
     }
 
     return () => {
-      recognition.stop();
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+        recognitionRef.current = null;
+      }
     };
   }, [isListening]);
 
