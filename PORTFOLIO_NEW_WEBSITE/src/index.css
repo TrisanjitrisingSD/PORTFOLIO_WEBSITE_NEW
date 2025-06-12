@@ -367,3 +367,106 @@
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+
+
+
+
+
+
+
+
+/* src/index.css or src/globals.css */
+
+/* src/index.css or src/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  These are the colors for your LIGHT theme (:root)
+  When 'dark' class is NOT present on <html>
+*/
+:root {
+  --background: #FFFFFF; /* White background */
+  --foreground: #333333; /* Dark grey text */
+  --muted-foreground: #6B7280;
+  --primary: #007BFF;
+
+  /* Button Colors for LIGHT Theme */
+  --button-background: #007BFF; /* A visible blue background for buttons */
+  --button-foreground: #FFFFFF; /* White text on blue button */
+  --button-hover-background: #0056b3; /* Darker blue on hover */
+}
+
+/*
+  These are the colors for your DARK theme (html.dark)
+  When 'dark' class IS present on <html> (your default)
+*/
+html.dark {
+  --background: #000000; /* Pure black background */
+  --foreground: #F8F8F8; /* Bright white text */
+  --muted-foreground: #A0A0A0;
+  --primary: #FFD700;
+
+  /* Button Colors for DARK Theme */
+  --button-background: #FFD700; /* Gold background for buttons */
+  --button-foreground: #000000; /* Black text on gold button */
+  --button-hover-background: #e6c200; /* Slightly darker gold on hover */
+}
+
+/* Base styles for body, using the CSS variables */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Helper classes to map Tailwind utilities to your CSS variables */
+.text-foreground {
+  color: var(--foreground);
+}
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+.text-primary {
+  color: var(--primary);
+}
+.bg-background {
+  background-color: var(--background);
+}
+
+/* 2. Apply these variables to your button styles */
+.cosmic-button {
+  /* Existing styles you have for cosmic-button (padding, border, etc.) */
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px; /* adjust to your button's roundness */
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none; /* remove underline for links */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Ensure smooth transitions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* example shadow */
+
+  /* Theme-aware colors */
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+}
+
+.cosmic-button:hover {
+  background-color: var(--button-hover-background);
+  transform: translateY(-2px); /* example hover effect */
+}
+
+/* If you have other specific button classes, apply similar logic: */
+/* Example for a general 'btn' class */
+.btn {
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+  /* ...other btn styles... */
+}
+.btn:hover {
+  background-color: var(--button-hover-background);
+}
