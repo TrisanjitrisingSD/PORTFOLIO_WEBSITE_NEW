@@ -23,7 +23,7 @@
 //           <p className="text-lg md:text-xl text-muted-foreground max-2-2xl mx-auto opacity-0 animate-fade-in-delay-3">
 //             I build robust full-stack applications and leverage data science to drive smart, scalable solutions.
 //           </p>
-          
+
 
 
 //           <div className="pt-4 opacity-0 animate-fade-in-delay-4">
@@ -156,32 +156,40 @@ export const HeroSection = () => {
         <span className="text-sm text-muted-foreground mb-2"> Scroll </span>
         <ArrowDown className="h-5 w-5 text-primary" />
       </div>
+      {
+        <style>{`
+             .glow-text {
+    color: #FFFA8A;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+    animation: optimized-glow 3s ease-in-out infinite,
+      shrink-expand 1.5s ease-in-out infinite; /* Keep shrink-expand */
+    will-change: text-shadow, transform; /* Hint for both animations */
+  }
 
-      <style>{`
-        .glow-text {
-          color: #ffffff;
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-          animation: glow 2s ease-in-out infinite, shrink-expand 1.5s ease-in-out infinite;
-        }
+  @keyframes optimized-glow {
+    0%,
+    100% {
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.6),
+        0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.9),
+        0 0 15px rgba(255, 255, 255, 0.5);
+    }
+  }
 
-        @keyframes glow {
-          0%, 100% {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-          }
-          50% {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.7);
-          }
-        }
-
-        @keyframes shrink-expand {
-          0%, 100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(0.9);
-          }
-        }
-      `}</style>
+  @keyframes shrink-expand {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+  }
+      `}
+        </style>
+      }
     </section>
   );
 };
