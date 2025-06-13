@@ -616,14 +616,15 @@ export const ContactSection = () => {
                   placeholder="Hello, I'd like to talk about..."
                 />
               </div>
+                  <button
+  type="submit"
+  disabled={isSubmitting}
+  className={cn(
+   "cosmic-button w-fit flex items-center justify-center gap-1 px-3 py-1.5 text-base"
+  )}
+>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2","text-lg"
-                )}
-              >
+
                 {isSubmitting ? "Sending..." : "Send Message"}
                 <Send size={16} />
               </button>
