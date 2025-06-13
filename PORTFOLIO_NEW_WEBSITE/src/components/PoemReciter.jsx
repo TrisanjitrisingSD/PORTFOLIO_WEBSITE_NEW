@@ -365,17 +365,240 @@
 
 
 
+// import React, { useState, useEffect, useRef, useCallback } from "react";
+
+// export const PoemReciter = () => {
+//   const [isActive, setIsActive] = useState(false);
+//   const [statusMessage, setStatusMessage] = useState("");
+
+//   const isSpeechSynthesisSupported = "speechSynthesis" in window;
+//   const availableVoices = useRef([]); // To store available voices
+
+//   // Your Bengali poem lines
+//   const poemLines = [
+//     "বঙ্গ সাহিত্য অতি সমৃদ্ধ হয়েছে কবির ছোয়ায়,",
+//     "কবিগুরু তিনি রবীন্দ্রনাথ ঠাকুর প্রণাম জানাই তোমায়।",
+//     "বাঙালি জাতির গর্ব যিনি স্থান যার অতি উচ্চে,",
+//     "মেলে ধরেছেন বাংলার সাহিত্য বিশ্বের সব প্রান্তে।",
+//     "কাব্য, কবিতা, নাটক, প্রবন্ধ - সব ক্ষেত্রেই পারদর্শী,",
+//     "করেছেন অনেক মহান সৃষ্টি , কটা নাম ই বা বলি।",
+//     "কবি সত্ত্বায় শুধু থেমে থাকেন নি, বিজ্ঞানেও রেখেছেন দৃষ্টি,",
+//     "“ বিশ্ব পরিচয়” গ্রন্থখানি তারই অমর সৃষ্টি।",
+//     "প্রথম বাঙালি তিনিই , নোবেল পেলেন যিনি, লিখেছিলেন গীতাঞ্জলি,",
+//     "পরাধীন জাতির শাসকদের বিরুদ্ধে ছিল সে ভীষন জিত।",
+//     "বিশ্বকবির ছিল না মোহ রাজশাহী পদকের প্রতি,",
+//     "শত ঘৃণা ভরে তাই প্রত্যাখান করেছিলেন ইংরেজদের “নাইট” উপাধি।",
+//     "আজ কবিগুরুর জন্মদিবস এ রইলো সস্রদ্ধ প্রণাম,",
+//     "ভারত মাতার এমন গুণী যুগে যুগে দরকার।",
+//   ];
+
+//   const introMessage = "এখানে রয়েছে ত্রিসঞ্জিতের একটি সুন্দর ছন্দোবদ্ধ কবিতা";
+//   const outroMessage = "ত্রিসঞ্জিতের এই সুন্দর কবিতা শোনার জন্য ধন্যবাদ, বিদায় ";
+
+//   // --- Voice Initialization (kept as is) ---
+//   const loadVoices = useCallback(() => {
+//     if (isSpeechSynthesisSupported) {
+//       availableVoices.current = window.speechSynthesis.getVoices();
+//       console.log("DEBUG: All available voices:", availableVoices.current);
+//       const bengaliVoices = availableVoices.current.filter(voice =>
+//         voice.lang.startsWith('bn-') || voice.lang.startsWith('bn_')
+//       );
+//       console.log("DEBUG: Bengali voices found:", bengaliVoices);
+//       if (bengaliVoices.length === 0) {
+//         setStatusMessage("বেঙ্গলি ভয়েস পাওয়া যায়নি। OS/ব্রাউজার সেটিংস চেক করুন।");
+//         console.warn("WARN: No Bengali (bn-IN/bn-BD) voices found in your browser/OS.");
+//       } else {
+//         setStatusMessage("");
+//       }
+//     }
+//   }, [isSpeechSynthesisSupported]);
+
+//   useEffect(() => {
+//     if (isSpeechSynthesisSupported) {
+//       window.speechSynthesis.onvoiceschanged = loadVoices;
+//       loadVoices();
+//     }
+//   }, [isSpeechSynthesisSupported, loadVoices]);
+
+//   // Helper to create and speak an utterance, with voice selection
+//   const createAndSpeakUtterance = useCallback((text, lang = 'bn-IN', onUtteranceEnd = () => {}) => {
+//     if (!isSpeechSynthesisSupported) {
+//       console.warn("Speech Synthesis not supported.");
+//       onUtteranceEnd();
+//       return null;
+//     }
+
+//     const utterance = new SpeechSynthesisUtterance(text);
+//     utterance.rate = 1;
+//     utterance.lang = lang;
+
+//     const preferredVoice = availableVoices.current.find(voice =>
+//       voice.lang === lang || (voice.lang.startsWith('bn-') && voice.default)
+//     );
+//     if (preferredVoice) {
+//       utterance.voice = preferredVoice;
+//       console.log(`DEBUG: Using voice: ${preferredVoice.name} (${preferredVoice.lang}) for "${text.substring(0, 20)}..."`);
+//     } else {
+//       console.warn(`WARN: No specific voice found for lang: ${lang}. Using default for "${text.substring(0, 20)}..."`);
+//     }
+
+//     utterance.onend = () => {
+//       console.log(`DEBUG: Finished speaking: "${text.substring(0, 20)}..."`);
+//       onUtteranceEnd(); // Call the specific callback for this utterance
+//     };
+
+//     utterance.onerror = (event) => {
+//       console.error("ERROR: SpeechSynthesisUtterance.onerror:", event);
+//       console.error("ERROR: Error details:", event.error);
+//       setStatusMessage(`পরে শুনলে বলবেন: ${event.error}`);
+//       onUtteranceEnd(); // Ensure callback is called even on error
+//     };
+
+//     speechSynthesis.speak(utterance);
+//     console.log(`DEBUG: Called speechSynthesis.speak() for: "${text.substring(0, 20)}..."`);
+//     return utterance; // Return the utterance object if needed
+//   }, [isSpeechSynthesisSupported]);
+
+
+//   const stopAllSpeech = useCallback(() => {
+//     if (isSpeechSynthesisSupported) {
+//       if (speechSynthesis.speaking) {
+//         speechSynthesis.cancel();
+//         console.log("DEBUG: speechSynthesis.cancel() called.");
+//       }
+//       console.log("DEBUG: Stop command processed.");
+//     }
+//   }, [isSpeechSynthesisSupported]);
+
+
+//   // Main function to start the poem recitation
+//   const startPoem = () => {
+//     console.log("DEBUG: Starting poem recitation...");
+//     stopAllSpeech(); // Ensure clean slate (stops current, clears browser's queue)
+//     setIsActive(true);
+//     setStatusMessage("কবিতা আবৃত্তি হচ্ছে...");
+
+//     let currentLineIndex = 0; // Local index for this specific recitation flow
+
+//     const allLinesToSpeak = [introMessage, ...poemLines, outroMessage];
+//     const totalLines = allLinesToSpeak.length;
+
+//     const speakNextQueuedLine = () => {
+//         if (currentLineIndex < totalLines) {
+//             const line = allLinesToSpeak[currentLineIndex];
+//             const isLastLine = (currentLineIndex === totalLines - 1);
+
+//             createAndSpeakUtterance(line, 'bn-IN', () => {
+//                 // This callback fires when the current utterance finishes.
+//                 // We *could* introduce a slight pause here before the *next* line.
+//                 // However, for maximum autoplay policy compatibility, we'll
+//                 // queue all utterances immediately.
+//                 if (isLastLine) {
+//                     console.log("DEBUG: Last line finished speaking.");
+//                     setIsActive(false); // Poem finished naturally
+//                     setStatusMessage("শেষ হলো।");
+//                     setTimeout(() => setStatusMessage(""), 3000);
+//                 }
+//             });
+//             currentLineIndex++; // Move to the next line for the next createAndSpeakUtterance call
+//         }
+//     };
+
+//     // Queue all lines immediately after the button click
+//     allLinesToSpeak.forEach((line, index) => {
+//         // For lines in the middle, we want them to flow without specific callbacks
+//         // The last line will trigger the 'finished' state
+//         const isLastLine = (index === totalLines - 1);
+//         createAndSpeakUtterance(line, 'bn-IN', isLastLine ? () => {
+//             // This is the onUtteranceEnd callback for the very last line
+//             console.log("DEBUG: Entire poem sequence finished.");
+//             setIsActive(false); // Poem finished naturally
+//             setStatusMessage("শেষ হলো।");
+//             setTimeout(() => setStatusMessage(""), 3000);
+//         } : undefined); // No special callback for intermediate lines
+//     });
+
+//     // You might want a small delay for status update, but speech should start immediately.
+//   };
+
+
+//   const togglePoem = () => {
+//     console.log("DEBUG: Toggling poem, current isActive:", isActive);
+//     if (!isActive) {
+//       // User clicks to START
+//       startPoem();
+//     } else {
+//       // User clicks to STOP
+//       console.log("DEBUG: User clicked STOP button.");
+//       stopAllSpeech(); // This should immediately halt audio and clear internal queue
+//       setIsActive(false); // Set to inactive immediately
+//       setStatusMessage("বন্ধ করা হলো।");
+//       setTimeout(() => setStatusMessage(""), 3000);
+//     }
+//   };
+
+//   useEffect(() => {
+//     // Cleanup on component unmount
+//     return () => {
+//       console.log("DEBUG: Cleaning up PoemReciter on component unmount.");
+//       stopAllSpeech();
+//     };
+//   }, [stopAllSpeech]);
+
+
+//   return (
+//     <div style={{ textAlign: "center" }}>
+//       <button
+//         onClick={togglePoem}
+//         style={{
+//           padding: "10px 10px",
+//           fontSize: "10px",
+//           backgroundColor: isActive ? "#dc3545" : "#28a745",
+//           color: "white",
+//           border: "none",
+//           borderRadius: "8px",
+//           cursor: "pointer",
+//           boxShadow: "0 0 12px rgba(167, 40, 125, 0.7)",
+//         }}
+//       >
+//         {isActive ? "❤️Stop Poem" : "❤️Recite Poem"}
+//       </button>
+//       {statusMessage && (
+//         <div
+//           style={{
+//             marginTop: "10px",
+//             color: "#ff4081",
+//             fontSize: "24px",
+//             fontWeight: "bold",
+//             animation: "fadeIn 1s ease-in-out",
+//           }}
+//         >
+//           {statusMessage}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default PoemReciter;
+
+
+
+
+
+
+
+
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
 export const PoemReciter = () => {
   const [isActive, setIsActive] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
-
   const isSpeechSynthesisSupported = "speechSynthesis" in window;
-  const availableVoices = useRef([]); // To store available voices
+  const availableVoices = useRef([]);
+  const preferredLangRef = useRef("bn-IN"); // Start assuming Bengali
 
-  // Your Bengali poem lines
-  const poemLines = [
+  const bengaliPoem = [
     "বঙ্গ সাহিত্য অতি সমৃদ্ধ হয়েছে কবির ছোয়ায়,",
     "কবিগুরু তিনি রবীন্দ্রনাথ ঠাকুর প্রণাম জানাই তোমায়।",
     "বাঙালি জাতির গর্ব যিনি স্থান যার অতি উচ্চে,",
@@ -389,162 +612,126 @@ export const PoemReciter = () => {
     "বিশ্বকবির ছিল না মোহ রাজশাহী পদকের প্রতি,",
     "শত ঘৃণা ভরে তাই প্রত্যাখান করেছিলেন ইংরেজদের “নাইট” উপাধি।",
     "আজ কবিগুরুর জন্মদিবস এ রইলো সস্রদ্ধ প্রণাম,",
-    "ভারত মাতার এমন গুণী যুগে যুগে দরকার।",
+    "ভারত মাতার এমন গুণী যুগে যুগে দরকার।"
   ];
 
-  const introMessage = "এখানে রয়েছে ত্রিসঞ্জিতের একটি সুন্দর ছন্দোবদ্ধ কবিতা";
-  const outroMessage = "ত্রিসঞ্জিতের এই সুন্দর কবিতা শোনার জন্য ধন্যবাদ, বিদায় ";
+  const englishPoem = [
+    "The Bengali pen shines bright, its ink like flowing art,",
+    "Rabindranath Tagore, we bow to you from heart.",
+    "A poet, sage, and thinker, who led with soulful grace,",
+    "His words still echo loudly, through time and every place.",
+    "From verse to play to lecture, his wisdom reached afar,",
+    "So many works he gifted — each a guiding star.",
+    "Not just in words he triumphed, but in science too he gazed,",
+    "His book 'Visva Parichay' left many minds amazed.",
+    "The first Bengali Nobel — Gitanjali his song,",
+    "A voice that stood for justice, when the world was going wrong.",
+    "He shunned the knightly honor from rulers not so kind,",
+    "A fearless act of protest — a truly noble mind.",
+    "So here's our humble tribute on his birth anniversary,",
+    "May India birth such legends through all of history."
+  ];
 
-  // --- Voice Initialization (kept as is) ---
+  const introLine = {
+    bn: "এখানে রয়েছে ত্রিসঞ্জিতের একটি সুন্দর ছন্দোবদ্ধ কবিতা",
+    en: "Here's a beautiful rhythmic poem presented by Trisanjit",
+  };
+  const outroLine = {
+    bn: "ত্রিসঞ্জিতের এই সুন্দর কবিতা শোনার জন্য ধন্যবাদ, বিদায় ",
+    en: "Thank you for listening to this poem by Trisanjit. Goodbye.",
+  };
+
   const loadVoices = useCallback(() => {
-    if (isSpeechSynthesisSupported) {
-      availableVoices.current = window.speechSynthesis.getVoices();
-      console.log("DEBUG: All available voices:", availableVoices.current);
-      const bengaliVoices = availableVoices.current.filter(voice =>
-        voice.lang.startsWith('bn-') || voice.lang.startsWith('bn_')
-      );
-      console.log("DEBUG: Bengali voices found:", bengaliVoices);
-      if (bengaliVoices.length === 0) {
-        setStatusMessage("বেঙ্গলি ভয়েস পাওয়া যায়নি। OS/ব্রাউজার সেটিংস চেক করুন।");
-        console.warn("WARN: No Bengali (bn-IN/bn-BD) voices found in your browser/OS.");
-      } else {
-        setStatusMessage("");
-      }
+    if (!isSpeechSynthesisSupported) return;
+
+    availableVoices.current = speechSynthesis.getVoices();
+    const bnVoice = availableVoices.current.find(v => v.lang.startsWith("bn"));
+    const enVoice = availableVoices.current.find(v => v.lang.startsWith("en"));
+
+    if (bnVoice) {
+      preferredLangRef.current = "bn-IN";
+      setStatusMessage("✅ Bengali voice available.");
+    } else if (enVoice) {
+      preferredLangRef.current = "en-US";
+      setStatusMessage("⚠️ Bengali voice unavailable. Using English.");
+    } else {
+      setStatusMessage("❌ No suitable voice found.");
     }
   }, [isSpeechSynthesisSupported]);
 
   useEffect(() => {
-    if (isSpeechSynthesisSupported) {
-      window.speechSynthesis.onvoiceschanged = loadVoices;
-      loadVoices();
-    }
-  }, [isSpeechSynthesisSupported, loadVoices]);
-
-  // Helper to create and speak an utterance, with voice selection
-  const createAndSpeakUtterance = useCallback((text, lang = 'bn-IN', onUtteranceEnd = () => {}) => {
     if (!isSpeechSynthesisSupported) {
-      console.warn("Speech Synthesis not supported.");
-      onUtteranceEnd();
-      return null;
+      setStatusMessage("❌ Speech synthesis not supported in your browser.");
+      return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1;
-    utterance.lang = lang;
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+  }, [loadVoices, isSpeechSynthesisSupported]);
 
-    const preferredVoice = availableVoices.current.find(voice =>
-      voice.lang === lang || (voice.lang.startsWith('bn-') && voice.default)
-    );
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-      console.log(`DEBUG: Using voice: ${preferredVoice.name} (${preferredVoice.lang}) for "${text.substring(0, 20)}..."`);
-    } else {
-      console.warn(`WARN: No specific voice found for lang: ${lang}. Using default for "${text.substring(0, 20)}..."`);
-    }
-
-    utterance.onend = () => {
-      console.log(`DEBUG: Finished speaking: "${text.substring(0, 20)}..."`);
-      onUtteranceEnd(); // Call the specific callback for this utterance
-    };
-
-    utterance.onerror = (event) => {
-      console.error("ERROR: SpeechSynthesisUtterance.onerror:", event);
-      console.error("ERROR: Error details:", event.error);
-      setStatusMessage(`পরে শুনলে বলবেন: ${event.error}`);
-      onUtteranceEnd(); // Ensure callback is called even on error
-    };
-
-    speechSynthesis.speak(utterance);
-    console.log(`DEBUG: Called speechSynthesis.speak() for: "${text.substring(0, 20)}..."`);
-    return utterance; // Return the utterance object if needed
-  }, [isSpeechSynthesisSupported]);
-
+  const shouldStopRef = useRef(false);
 
   const stopAllSpeech = useCallback(() => {
     if (isSpeechSynthesisSupported) {
-      if (speechSynthesis.speaking) {
-        speechSynthesis.cancel();
-        console.log("DEBUG: speechSynthesis.cancel() called.");
-      }
-      console.log("DEBUG: Stop command processed.");
+      shouldStopRef.current = true;
+      speechSynthesis.cancel();
     }
   }, [isSpeechSynthesisSupported]);
 
+  const speakLine = useCallback((text, lang, onEnd = () => {}) => {
+    if (shouldStopRef.current) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 1;
+    const voice = availableVoices.current.find(v => v.lang.startsWith(lang));
+    if (voice) utterance.voice = voice;
 
-  // Main function to start the poem recitation
+    utterance.onend = onEnd;
+    utterance.onerror = () => onEnd();
+
+    speechSynthesis.speak(utterance);
+  }, []);
+
   const startPoem = () => {
-    console.log("DEBUG: Starting poem recitation...");
-    stopAllSpeech(); // Ensure clean slate (stops current, clears browser's queue)
+    stopAllSpeech();
+    shouldStopRef.current = false;
     setIsActive(true);
-    setStatusMessage("কবিতা আবৃত্তি হচ্ছে...");
 
-    let currentLineIndex = 0; // Local index for this specific recitation flow
+    const lang = preferredLangRef.current;
+    const poem = lang.startsWith("bn") ? bengaliPoem : englishPoem;
+    const intro = introLine[lang.startsWith("bn") ? "bn" : "en"];
+    const outro = outroLine[lang.startsWith("bn") ? "bn" : "en"];
 
-    const allLinesToSpeak = [introMessage, ...poemLines, outroMessage];
-    const totalLines = allLinesToSpeak.length;
+    const allLines = [intro, ...poem, outro];
+    let index = 0;
 
-    const speakNextQueuedLine = () => {
-        if (currentLineIndex < totalLines) {
-            const line = allLinesToSpeak[currentLineIndex];
-            const isLastLine = (currentLineIndex === totalLines - 1);
-
-            createAndSpeakUtterance(line, 'bn-IN', () => {
-                // This callback fires when the current utterance finishes.
-                // We *could* introduce a slight pause here before the *next* line.
-                // However, for maximum autoplay policy compatibility, we'll
-                // queue all utterances immediately.
-                if (isLastLine) {
-                    console.log("DEBUG: Last line finished speaking.");
-                    setIsActive(false); // Poem finished naturally
-                    setStatusMessage("শেষ হলো।");
-                    setTimeout(() => setStatusMessage(""), 3000);
-                }
-            });
-            currentLineIndex++; // Move to the next line for the next createAndSpeakUtterance call
-        }
+    const speakNext = () => {
+      if (shouldStopRef.current) return;
+      if (index < allLines.length) {
+        speakLine(allLines[index], lang, () => {
+          index++;
+          speakNext();
+        });
+      } else {
+        setStatusMessage("✅ Poem finished.");
+        setIsActive(false);
+        setTimeout(() => setStatusMessage(""), 3000);
+      }
     };
 
-    // Queue all lines immediately after the button click
-    allLinesToSpeak.forEach((line, index) => {
-        // For lines in the middle, we want them to flow without specific callbacks
-        // The last line will trigger the 'finished' state
-        const isLastLine = (index === totalLines - 1);
-        createAndSpeakUtterance(line, 'bn-IN', isLastLine ? () => {
-            // This is the onUtteranceEnd callback for the very last line
-            console.log("DEBUG: Entire poem sequence finished.");
-            setIsActive(false); // Poem finished naturally
-            setStatusMessage("শেষ হলো।");
-            setTimeout(() => setStatusMessage(""), 3000);
-        } : undefined); // No special callback for intermediate lines
-    });
-
-    // You might want a small delay for status update, but speech should start immediately.
+    speakNext();
+    setStatusMessage("🔊 Poem is being recited...");
   };
 
-
   const togglePoem = () => {
-    console.log("DEBUG: Toggling poem, current isActive:", isActive);
-    if (!isActive) {
-      // User clicks to START
-      startPoem();
-    } else {
-      // User clicks to STOP
-      console.log("DEBUG: User clicked STOP button.");
-      stopAllSpeech(); // This should immediately halt audio and clear internal queue
-      setIsActive(false); // Set to inactive immediately
-      setStatusMessage("বন্ধ করা হলো।");
+    if (!isActive) startPoem();
+    else {
+      stopAllSpeech();
+      setIsActive(false);
+      setStatusMessage("⛔ Poem stopped.");
       setTimeout(() => setStatusMessage(""), 3000);
     }
   };
-
-  useEffect(() => {
-    // Cleanup on component unmount
-    return () => {
-      console.log("DEBUG: Cleaning up PoemReciter on component unmount.");
-      stopAllSpeech();
-    };
-  }, [stopAllSpeech]);
-
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -552,7 +739,7 @@ export const PoemReciter = () => {
         onClick={togglePoem}
         style={{
           padding: "10px 10px",
-          fontSize: "10px",
+          fontSize: "14px",
           backgroundColor: isActive ? "#dc3545" : "#28a745",
           color: "white",
           border: "none",
@@ -561,16 +748,16 @@ export const PoemReciter = () => {
           boxShadow: "0 0 12px rgba(167, 40, 125, 0.7)",
         }}
       >
-        {isActive ? "❤️Stop Poem" : "❤️Recite Poem"}
+        {isActive ? "❤️ Stop Poem" : "❤️ Recite Poem"}
       </button>
+
       {statusMessage && (
         <div
           style={{
             marginTop: "10px",
             color: "#ff4081",
-            fontSize: "24px",
+            fontSize: "18px",
             fontWeight: "bold",
-            animation: "fadeIn 1s ease-in-out",
           }}
         >
           {statusMessage}
@@ -581,3 +768,6 @@ export const PoemReciter = () => {
 };
 
 export default PoemReciter;
+
+
+
