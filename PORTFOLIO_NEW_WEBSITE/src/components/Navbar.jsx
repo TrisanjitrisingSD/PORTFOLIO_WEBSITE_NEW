@@ -15,7 +15,7 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isImageEnlarged, setIsImageEnlarged] = useState(false); // <--- NEW STATE
+  const [isImageEnlarged, setIsImageEnlarged] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,10 +23,21 @@ export const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  // Function to toggle image size
+    // Prevent background scroll when menu is open
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+      window.scrollTo(0, 0); // Always scroll to top for full menu overlay
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
   const toggleImageSize = () => {
     setIsImageEnlarged((prev) => !prev);
   };
@@ -43,16 +54,14 @@ export const Navbar = () => {
           className="text-xl font-bold text-primary flex items-center"
           href="#hero"
         >
-          {/* Your clickable profile picture */}
           <img
             src={profilePic}
             alt="Trisanjit's Profile"
-            onClick={toggleImageSize} // <--- ADD onClick HANDLER
+            onClick={toggleImageSize}
             className={cn(
-              "rounded-full object-cover mr-2 border-2 border-primary cursor-pointer", // Add cursor-pointer
-              "transition-all duration-300 ease-in-out", // Add transition for smooth animation
-              isImageEnlarged ? "w-64 h-64" : "w-12 h-12" // <--- CHANGE THIS LINE!
-                                                    // Changed from "w-10 h-10" to "w-12 h-12"
+              "rounded-full object-cover mr-2 border-2 border-primary cursor-pointer",
+              "transition-all duration-300 ease-in-out",
+              isImageEnlarged ? "w-64 h-64" : "w-12 h-12"
             )}
           />
           <span className="relative z-10">
@@ -74,18 +83,19 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* mobile nav */}
+        {/* mobile menu button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
           className="md:hidden p-2 text-foreground z-50"
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
+        {/* mobile nav overlay */}
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdroup-blur-md z-40 flex flex-col items-center justify-center",
+            "fixed top-0 left-0 w-full h-full bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
             "transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
@@ -107,17 +117,17 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* --- Overlay and Enlarged Image Display --- */}
-      {isImageEnlarged && ( // <--- CONDITIONAL RENDERING OF OVERLAY
+      {/* enlarged profile overlay */}
+      {isImageEnlarged && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center"
-          onClick={toggleImageSize} // Click anywhere on overlay to shrink
+          onClick={toggleImageSize}
         >
           <img
             src={profilePic}
             alt="Trisanjit's Profile (Enlarged)"
-            className="w-80 h-80 rounded-full object-cover border-4 border-primary shadow-lg cursor-pointer" // Larger size and styling for enlarged image
-            onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to overlay (keeps image open if clicked directly)
+            className="w-80 h-80 rounded-full object-cover border-4 border-primary shadow-lg cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}
