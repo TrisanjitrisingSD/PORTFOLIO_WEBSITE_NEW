@@ -22,7 +22,7 @@ Welcome to my AI-powered portfolio — a sleek, modern, and intelligent showcase
 
 | Category         | Tools / Frameworks                     |
 |------------------|----------------------------------------|
-| Frontend         | React, TypeScript, Tailwind CSS        |
+| Frontend         | React, JavaScript, Tailwind CSS        |
 | AI Integration   | Web Speech API                         |
 | Animations       | Framer Motion                          |
 | Icons            | Lucide React                           |
