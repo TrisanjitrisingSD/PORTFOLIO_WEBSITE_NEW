@@ -35,6 +35,6 @@ Welcome to my AI-powered portfolio — a sleek, modern, and intelligent showcase
 **Trisanjit Das**  
 📍 Jadavpur University, India  
 💼 Aspiring Full-Stack Developer & AI Enthusiast  
-🔗 [LinkedIn](https://www.linkedin.com/in/TrisanjitrisingSD)  
+🔗 [LinkedIn](https://www.linkedin.com/in/trisanjit-das-60482728b)  
 💻 [GitHub](https://github.com/TrisanjitrisingSD)  
 🌐 [Portfolio](https://trisanjit-rising-hope.netlify.app)
