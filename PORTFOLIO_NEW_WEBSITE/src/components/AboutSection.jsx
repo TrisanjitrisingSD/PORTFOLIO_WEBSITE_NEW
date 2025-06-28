@@ -17,8 +17,8 @@ export const AboutSection = () => {
 
             <p className="text-muted-foreground">
               I am a dedicated and curious learner with a deep passion for    Web Development,
-              Data Science, and Artificial  Intelligence/Machine Learning. I enjoy creating responsive and 
-              dynamic web applications, while also diving into data-driven problem-solving and intelligent system design. 
+              Data Science, and Artificial  Intelligence/Machine Learning. I enjoy creating responsive and
+              dynamic web applications, while also diving into data-driven problem-solving and intelligent system design.
               My goal is to blend software engineering with data and AI to build impactful solutions.
 
             </p>
@@ -37,7 +37,8 @@ export const AboutSection = () => {
               </a>
 
               <a
-                href=""
+                href="/Trisanjit_Das_CV.pdf"
+                download
                 className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
               >
                 Download CV
