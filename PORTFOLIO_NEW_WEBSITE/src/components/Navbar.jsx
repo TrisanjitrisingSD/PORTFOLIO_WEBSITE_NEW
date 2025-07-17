@@ -145,6 +145,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import profilePic from "../assets/profile.jpg";
 import leetcodeIcon from "../assets/leetcode.png"; // Make sure this exists
+import LogoToggle from "./LogoToggle";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -211,6 +212,9 @@ export const Navbar = () => {
             <span className="text-glow text-foreground"> Trisanjit's </span>{" "}
             Portfolio
           </span>
+          <div className="flex items-center gap-2 ml-4 mt-2">
+            <LogoToggle />
+          </div>
         </a>
 
         {/* Desktop nav */}
