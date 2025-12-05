@@ -112,12 +112,12 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "TrioChat",
-    description: "A real-time chatting web app with group and private chat features.",
+    title: "WarniFy",
+    description: "An intelligent,full-stack AI powered platform built with Gemini,React(Vite),Express and NeonDB.",
     image: "/projects/project1.png",
-    tags: ["React", "Node.js", "Socket.IO", "MongoDB"],
-    demoUrl: "https://triochat.netlify.app",
-    githubUrl: "https://github.com/TrisanjitrisingSD/TRIO_CHAT",
+    tags: ["React", "Express", "Gemini", "NeonDB"],
+    demoUrl: "https://warni-fy.vercel.app",
+    githubUrl: "https://github.com/TrisanjitrisingSD/WarniFy",
   },
   {
     id: 2,
