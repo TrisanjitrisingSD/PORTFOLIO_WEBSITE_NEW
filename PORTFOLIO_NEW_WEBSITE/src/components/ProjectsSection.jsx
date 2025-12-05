@@ -128,6 +128,15 @@ const projects = [
     demoUrl: "https://trio-sio-gra-m.vercel.app",
     githubUrl: "https://github.com/TrisanjitrisingSD/TrioSioGraM",
   },
+  {
+    id: 3,
+    title: "TrioTUBE",
+    description: "A YouTube-inspired video streaming web app built using React, TailwindCSS, and Google Cloud's YouTube Data API.",
+    image: "/projects/project3.png",
+    tags: ["React", "TailwindCSS", "Google Cloud API","Clerk"],
+    demoUrl: "https://triotube.vercel.app",
+    githubUrl: "https://github.com/TrisanjitrisingSD/TrioTUBE",
+  }
 ];
 
 export const ProjectsSection = () => {
