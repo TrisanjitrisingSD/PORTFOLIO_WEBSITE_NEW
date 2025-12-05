@@ -429,7 +429,7 @@ export const ContactSection = () => {
     };
 
     try {
-      const response = await fetch("https://backend-f7gr.onrender.com/api/send-email", {
+      const response = await fetch("https://backend-1rns.onrender.com/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
